@@ -1,0 +1,9 @@
+# linting
+flake8
+black
+
+# testing
+pytest
+
+# debugging
+pdbpp

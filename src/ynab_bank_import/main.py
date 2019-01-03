@@ -11,12 +11,10 @@ import re
 log = logging.getLogger(__name__)
 
 
-def import_one(importer, input, output,
-               content_match=None,
-               remove_input=False):
+def import_one(importer, input, output, content_match=None, remove_input=False):
     for filename in glob.glob(input):
         if content_match:
-            content = open(filename, encoding='latin1').read()
+            content = open(filename, encoding="latin1").read()
             if not re.search(content_match, content, re.DOTALL):
                 continue
 
@@ -32,26 +30,32 @@ def import_one(importer, input, output,
             log.info("No new transactions.")
         else:
             log.info("Output file: {}".format(store.output_file))
-            log.info("{} new transactions. {} ignored transactions.".format(
-                store.written, store.ignored))
+            log.info(
+                "{} new transactions. {} ignored transactions.".format(
+                    store.written, store.ignored
+                )
+            )
 
 
 def configure_logging(debug=False):
     level = logging.DEBUG if debug else logging.INFO
-    logging.basicConfig(level=level, format='%(message)s')
+    logging.basicConfig(level=level, format="%(message)s")
 
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        'configuration', default='accounts.cfg', nargs='?',
-        help='Account configuration file. Default: accounts.cfg')
+        "configuration",
+        default="accounts.cfg",
+        nargs="?",
+        help="Account configuration file. Default: accounts.cfg",
+    )
     parser.add_argument(
-        '-d', '--debug', default=False, action='store_true',
-        help='Enable debug output')
+        "-d", "--debug", default=False, action="store_true", help="Enable debug output"
+    )
     parser.add_argument(
-        '-k', '--keep', default=False, action='store_true',
-        help='Keep input files.')
+        "-k", "--keep", default=False, action="store_true", help="Keep input files."
+    )
     args = parser.parse_args()
     configure_logging(debug=args.debug)
 
@@ -61,11 +65,16 @@ def main():
     for section in config.sections():
         log.info("Importing {}".format(section))
 
-        importer = next(pkg_resources.iter_entry_points(
-            'ynab_accounts', name=config[section]['type'])).load()
+        importer = next(
+            pkg_resources.iter_entry_points(
+                "ynab_accounts", name=config[section]["type"]
+            )
+        ).load()
 
-        import_one(importer,
-                   config[section]['input'],
-                   os.path.join('ynab', section),
-                   content_match=config[section].get('match'),
-                   remove_input=(not args.keep))
+        import_one(
+            importer,
+            config[section]["input"],
+            os.path.join("ynab", section),
+            content_match=config[section].get("match"),
+            remove_input=(not args.keep),
+        )

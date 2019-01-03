@@ -4,14 +4,14 @@ import io
 
 
 class IngCSV(csv.Dialect):
-    delimiter = ';'
+    delimiter = ";"
     quotechar = '"'
     quoting = csv.QUOTE_MINIMAL
-    lineterminator = '\r\n'
+    lineterminator = "\r\n"
 
 
 def do_import(filename, store):
-    ing_file = open(filename, newline='', encoding='latin1')
+    ing_file = open(filename, newline="", encoding="latin1")
     # Remove superfluous data from ING file until the transaction log starts.
     ing_file_filtered = io.StringIO()
     for line in ing_file:
@@ -26,11 +26,10 @@ def do_import(filename, store):
     # Convert the actual data
     for record in csv.DictReader(ing_file, dialect=IngCSV):
         t = store.new_transaction()
-        t.Date = record['Buchung'].replace('.', '/')
-        t.Payee = record['Auftraggeber/Empfänger']
-        t.Memo = record['Verwendungszweck']
-        amount = decimal.Decimal(
-            record['Betrag'].replace('.', '').replace(',', '.'))
+        t.Date = record["Buchung"].replace(".", "/")
+        t.Payee = record["Auftraggeber/Empfänger"]
+        t.Memo = record["Verwendungszweck"]
+        amount = decimal.Decimal(record["Betrag"].replace(".", "").replace(",", "."))
         if amount < 0:
             t.Outflow = -amount
         else:

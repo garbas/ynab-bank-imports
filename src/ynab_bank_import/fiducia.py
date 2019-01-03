@@ -9,32 +9,35 @@ log = logging.getLogger(__name__)
 
 
 class Dialect(csv.Dialect):
-    delimiter = ';'
+    delimiter = ";"
     quotechar = '"'
     quoting = csv.QUOTE_MINIMAL
-    lineterminator = '\n'
+    lineterminator = "\n"
 
 
 def import_account(filename, ynab):
     ## Skipping first lines with unneeded information
-    with open(filename, newline='', encoding='ISO-8859-15') as f:
+    with open(filename, newline="", encoding="ISO-8859-15") as f:
         bank_file = f.readlines()[12:]
 
     for record in csv.DictReader(bank_file, dialect=Dialect):
         # Skipping last lines "Anfangssaldo" and "Endsaldo"
-        if (record['Kundenreferenz'] == "Anfangssaldo" or record['Kundenreferenz'] == "Endsaldo" or record['Währung'] is None):
+        if (
+            record["Kundenreferenz"] == "Anfangssaldo"
+            or record["Kundenreferenz"] == "Endsaldo"
+            or record["Währung"] is None
+        ):
             continue
 
         t = ynab.new_transaction()
-        t.Date = record['Buchungstag']
-        t.Payee = record['Empfänger/Zahlungspflichtiger']
-        t.Memo = record['Vorgang/Verwendungszweck'].replace('\n', ' ')
+        t.Date = record["Buchungstag"]
+        t.Payee = record["Empfänger/Zahlungspflichtiger"]
+        t.Memo = record["Vorgang/Verwendungszweck"].replace("\n", " ")
 
-        amount = decimal.Decimal(
-            record['Umsatz'].replace('.', '').replace(',', '.'))
+        amount = decimal.Decimal(record["Umsatz"].replace(".", "").replace(",", "."))
 
         # Last column indicates postive / negative amount
-        if record[' '] == 'S':
+        if record[" "] == "S":
             t.Outflow = amount
         else:
             t.Inflow = amount

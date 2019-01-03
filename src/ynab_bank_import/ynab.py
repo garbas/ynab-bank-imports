@@ -8,22 +8,22 @@ import re
 
 
 class YNABCSV(csv.Dialect):
-    delimiter = ','
+    delimiter = ","
     quoting = csv.QUOTE_NONE
-    lineterminator = '\r\n'
+    lineterminator = "\r\n"
 
 
 def clean(str):
-    return re.sub(r'  +', ' ', str).strip()
+    return re.sub(r"  +", " ", str).strip()
 
 
 class Transaction(object):
 
-    fields = ['Date', 'Payee', 'Category', 'Memo', 'Outflow', 'Inflow']
+    fields = ["Date", "Payee", "Category", "Memo", "Outflow", "Inflow"]
 
     def __init__(self):
         for field in self.fields:
-            setattr(self, field, '')
+            setattr(self, field, "")
 
     def prepare(self):
         result = {}
@@ -33,7 +33,6 @@ class Transaction(object):
 
 
 class YNABStore(object):
-
     def __init__(self, output):
         self.output = output
         self.transactions = []
@@ -47,19 +46,17 @@ class YNABStore(object):
         return Transaction()
 
     def scan_existing(self):
-        for seen in glob.glob('{}*.csv'.format(self.output)):
-            self.transactions.extend(
-                csv.DictReader(open(seen, encoding='latin1')))
+        for seen in glob.glob("{}*.csv".format(self.output)):
+            self.transactions.extend(csv.DictReader(open(seen, encoding="latin1")))
 
     def setup_writer(self):
-        stamp = datetime.datetime.now().strftime('%Y-%m-%dT%H%M%S')
+        stamp = datetime.datetime.now().strftime("%Y-%m-%dT%H%M%S")
         serial = 0
-        self.output_file = '{}-{}-{}.csv'.format(self.output, stamp, serial)
+        self.output_file = "{}-{}-{}.csv".format(self.output, stamp, serial)
         while os.path.exists(self.output_file):
             serial += 1
-            self.output_file = '{}-{}-{}.csv'.format(
-                self.output, stamp, serial)
-        f = open(self.output_file, 'w', newline='', encoding='utf-8')
+            self.output_file = "{}-{}-{}.csv".format(self.output, stamp, serial)
+        f = open(self.output_file, "w", newline="", encoding="utf-8")
         self.writer = csv.DictWriter(f, Transaction.fields)
         self.writer.writeheader()
 

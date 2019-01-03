@@ -5,14 +5,14 @@ import io
 
 
 class DKBCSV(csv.Dialect):
-    delimiter = ';'
+    delimiter = ";"
     quotechar = '"'
     quoting = csv.QUOTE_MINIMAL
-    lineterminator = '\n'
+    lineterminator = "\n"
 
 
 def do_import(filename, ynab):
-    dkb_file = open(filename, newline='', encoding='latin1')
+    dkb_file = open(filename, newline="", encoding="latin1")
 
     # Remove superfluous data from dkb file until the transaction log starts.
     dkb_file_filtered = io.StringIO()
@@ -27,13 +27,14 @@ def do_import(filename, ynab):
 
     for record in csv.DictReader(dkb_file, dialect=DKBCSV):
         t = ynab.new_transaction()
-        if not record['Betrag (EUR)'].strip():
+        if not record["Betrag (EUR)"].strip():
             continue
-        t.Date = record['Wertstellung'].replace('.', '/')
-        t.Payee = record[u'Auftraggeber / Begünstigter']
-        t.Memo = record['Verwendungszweck']
+        t.Date = record["Wertstellung"].replace(".", "/")
+        t.Payee = record[u"Auftraggeber / Begünstigter"]
+        t.Memo = record["Verwendungszweck"]
         amount = decimal.Decimal(
-            record['Betrag (EUR)'].replace('.', '').replace(',', '.'))
+            record["Betrag (EUR)"].replace(".", "").replace(",", ".")
+        )
         if amount < 0:
             t.Outflow = -amount
         else:
