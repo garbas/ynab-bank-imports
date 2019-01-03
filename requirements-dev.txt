@@ -1,9 +1,14 @@
 # linting
-flake8
 black
+flake8
+flake8-debugger
+flake8-isort
+flake8-mypy
 
 # testing
+codecov
 pytest
+pytest-cov
 
 # debugging
 pdbpp

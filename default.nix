@@ -5,7 +5,7 @@ let
   python = import ./requirements.nix { inherit pkgs; };
   version = pkgs.lib.fileContents ./VERSION;
 in python.mkDerivation {
-  name = "pypi2nix-${version}";
+  name = "ynab-bank-import-${version}";
   src = pkgs.lib.cleanSourceWith {
     filter = name: type:
       let
@@ -20,10 +20,21 @@ in python.mkDerivation {
       );
     src = pkgs.lib.cleanSource ./.;
   };
+  outputs = [ "out" "coverage" ];
   buildInputs = with python.packages; [
-    flake8
+    # linting
     black
+    flake8
+    flake8-debugger
+    flake8-isort
+    flake8-mypy
+
+    # testing
+    codecov
     pytest
+    pytest-cov
+
+    # debugging
     pdbpp
   ];
   doCheck = true;
@@ -33,7 +44,17 @@ in python.mkDerivation {
     echo "Running flake8 ..."
     flake8 -v setup.py src/
     echo "Running pytest ..."
-    PYTHONPATH=$PWD/src:$PYTHONPATH pytest -v --cov=src/ tests/
+    PYTHONPATH=$PWD/src:$PYTHONPATH pytest -v --cov=src/ --tb=native tests/
     cp .coverage $coverage/coverage
+  '';
+  postInstall = ''
+    mkdir -p $coverage/bin $coverage/upload
+    cat > $coverage/bin/coverage <<EOL
+    #/bin/sh
+    cp "$coverage/coverage" ./.coverage
+    sed -i -e "s|$PWD/src|\$PWD/src|g" ./.coverage
+    eval ${python.packages."codecov"}/bin/codecov
+    EOL
+    chmod +x $coverage/bin/coverage
   '';
 }

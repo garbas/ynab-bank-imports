@@ -189,6 +189,73 @@ let
       };
     };
 
+    "certifi" = python.mkDerivation {
+      name = "certifi-2018.11.29";
+      src = pkgs.fetchurl {
+        url = "https://files.pythonhosted.org/packages/55/54/3ce77783acba5979ce16674fc98b1920d00b01d337cfaaf5db22543505ed/certifi-2018.11.29.tar.gz";
+        sha256 = "47f9c83ef4c0c621eaef743f133f09fa8a74a9b75f037e8624f83bd1b6626cb7";
+      };
+      doCheck = commonDoCheck;
+      buildInputs = commonBuildInputs ++ [ ];
+      propagatedBuildInputs = [ ];
+      meta = with pkgs.stdenv.lib; {
+        homepage = "https://certifi.io/";
+        license = licenses.mpl20;
+        description = "Python package for providing Mozilla's CA Bundle.";
+      };
+    };
+
+    "chardet" = python.mkDerivation {
+      name = "chardet-3.0.4";
+      src = pkgs.fetchurl {
+        url = "https://files.pythonhosted.org/packages/fc/bb/a5768c230f9ddb03acc9ef3f0d4a3cf93462473795d18e9535498c8f929d/chardet-3.0.4.tar.gz";
+        sha256 = "84ab92ed1c4d4f16916e05906b6b75a6c0fb5db821cc65e70cbd64a3e2a5eaae";
+      };
+      doCheck = commonDoCheck;
+      buildInputs = commonBuildInputs ++ [ ];
+      propagatedBuildInputs = [ ];
+      meta = with pkgs.stdenv.lib; {
+        homepage = "https://github.com/chardet/chardet";
+        license = licenses.lgpl3;
+        description = "Universal encoding detector for Python 2 and 3";
+      };
+    };
+
+    "codecov" = python.mkDerivation {
+      name = "codecov-2.0.15";
+      src = pkgs.fetchurl {
+        url = "https://files.pythonhosted.org/packages/77/f2/9790ee0f04eb0571841aff5ba1709c7869e82aa2145a04a3d4770807ff50/codecov-2.0.15.tar.gz";
+        sha256 = "8ed8b7c6791010d359baed66f84f061bba5bd41174bf324c31311e8737602788";
+      };
+      doCheck = commonDoCheck;
+      buildInputs = commonBuildInputs ++ [ ];
+      propagatedBuildInputs = [
+        self."coverage"
+        self."requests"
+      ];
+      meta = with pkgs.stdenv.lib; {
+        homepage = "http://github.com/codecov/codecov-python";
+        license = "http://www.apache.org/licenses/LICENSE-2.0";
+        description = "Hosted coverage reports for Github, Bitbucket and Gitlab";
+      };
+    };
+
+    "coverage" = python.mkDerivation {
+      name = "coverage-4.5.2";
+      src = pkgs.fetchurl {
+        url = "https://files.pythonhosted.org/packages/fb/af/ce7b0fe063ee0142786ee53ad6197979491ce0785567b6d8be751d2069e8/coverage-4.5.2.tar.gz";
+        sha256 = "ab235d9fe64833f12d1334d29b558aacedfbca2356dfb9691f2d0d38a8a7bfb4";
+      };
+      doCheck = commonDoCheck;
+      buildInputs = commonBuildInputs ++ [ ];
+      propagatedBuildInputs = [ ];
+      meta = with pkgs.stdenv.lib; {
+        homepage = "https://bitbucket.org/ned/coveragepy";
+        license = licenses.asl20;
+        description = "Code coverage measurement for Python";
+      };
+    };
+
     "fancycompleter" = python.mkDerivation {
       name = "fancycompleter-0.8";
       src = pkgs.fetchurl {
@@ -229,6 +296,99 @@ let
       };
     };
 
+    "flake8-debugger" = python.mkDerivation {
+      name = "flake8-debugger-3.1.0";
+      src = pkgs.fetchurl {
+        url = "https://files.pythonhosted.org/packages/39/4b/90548607282483dd15f9ce1f4434d735ae756e16e1faf60621b0f8877fcc/flake8-debugger-3.1.0.tar.gz";
+        sha256 = "be4fb88de3ee8f6dd5053a2d347e2c0a2b54bab6733a2280bb20ebd3c4ca1d97";
+      };
+      doCheck = commonDoCheck;
+      buildInputs = commonBuildInputs ++ [
+        self."pytest-runner"
+      ];
+      propagatedBuildInputs = [
+        self."flake8"
+        self."pycodestyle"
+      ];
+      meta = with pkgs.stdenv.lib; {
+        homepage = "https://github.com/jbkahn/flake8-debugger";
+        license = licenses.mit;
+        description = "ipdb/pdb statement checker plugin for flake8";
+      };
+    };
+
+    "flake8-isort" = python.mkDerivation {
+      name = "flake8-isort-2.6.0";
+      src = pkgs.fetchurl {
+        url = "https://files.pythonhosted.org/packages/85/fb/f2a33e47cf7520fd391e5f180cae5b8d2977ad7a5ddf897213137fe8a171/flake8-isort-2.6.0.tar.gz";
+        sha256 = "3c107c405dd6e3dbdcccb2f84549d76d58a07120cd997a0560fab8b84c305f2a";
+      };
+      doCheck = commonDoCheck;
+      buildInputs = commonBuildInputs ++ [ ];
+      propagatedBuildInputs = [
+        self."flake8"
+        self."isort"
+        self."testfixtures"
+      ];
+      meta = with pkgs.stdenv.lib; {
+        homepage = "https://github.com/gforcada/flake8-isort";
+        license = "GPL version 2";
+        description = "flake8 plugin that integrates isort .";
+      };
+    };
+
+    "flake8-mypy" = python.mkDerivation {
+      name = "flake8-mypy-17.8.0";
+      src = pkgs.fetchurl {
+        url = "https://files.pythonhosted.org/packages/97/9a/cddd1363d7314bb4eb452089c6fb3092ed9fda9f3350683d1978522a30ec/flake8-mypy-17.8.0.tar.gz";
+        sha256 = "47120db63aff631ee1f84bac6fe8e64731dc66da3efc1c51f85e15ade4a3ba18";
+      };
+      doCheck = commonDoCheck;
+      buildInputs = commonBuildInputs ++ [ ];
+      propagatedBuildInputs = [
+        self."attrs"
+        self."flake8"
+        self."mypy"
+      ];
+      meta = with pkgs.stdenv.lib; {
+        homepage = "https://github.com/ambv/flake8-mypy";
+        license = licenses.mit;
+        description = "A plugin for flake8 integrating mypy.";
+      };
+    };
+
+    "idna" = python.mkDerivation {
+      name = "idna-2.8";
+      src = pkgs.fetchurl {
+        url = "https://files.pythonhosted.org/packages/ad/13/eb56951b6f7950cadb579ca166e448ba77f9d24efc03edd7e55fa57d04b7/idna-2.8.tar.gz";
+        sha256 = "c357b3f628cf53ae2c4c05627ecc484553142ca23264e593d327bcde5e9c3407";
+      };
+      doCheck = commonDoCheck;
+      buildInputs = commonBuildInputs ++ [ ];
+      propagatedBuildInputs = [ ];
+      meta = with pkgs.stdenv.lib; {
+        homepage = "https://github.com/kjd/idna";
+        license = licenses.bsdOriginal;
+        description = "Internationalized Domain Names in Applications (IDNA)";
+      };
+    };
+
+    "isort" = python.mkDerivation {
+      name = "isort-4.3.4";
+      src = pkgs.fetchurl {
+        url = "https://files.pythonhosted.org/packages/b1/de/a628d16fdba0d38cafb3d7e34d4830f2c9cb3881384ce5c08c44762e1846/isort-4.3.4.tar.gz";
+        sha256 = "b9c40e9750f3d77e6e4d441d8b0266cf555e7cdabdcff33c4fd06366ca761ef8";
+      };
+      doCheck = commonDoCheck;
+      buildInputs = commonBuildInputs ++ [ ];
+      propagatedBuildInputs = [ ];
+      meta = with pkgs.stdenv.lib; {
+        homepage = "https://github.com/timothycrosley/isort";
+        license = licenses.mit;
+        description = "A Python utility / library to sort Python imports.";
+      };
+    };
+
     "mccabe" = python.mkDerivation {
       name = "mccabe-0.6.1";
       src = pkgs.fetchurl {
@@ -262,6 +422,41 @@ let
         homepage = "https://github.com/erikrose/more-itertools";
         license = licenses.mit;
         description = "More routines for operating on iterables, beyond itertools";
+      };
+    };
+
+    "mypy" = python.mkDerivation {
+      name = "mypy-0.650";
+      src = pkgs.fetchurl {
+        url = "https://files.pythonhosted.org/packages/5a/e0/76ab298191fb1d32f50ddb1d0a012c16f493ba6e1b460cc0d351fcf7932a/mypy-0.650.tar.gz";
+        sha256 = "38d5b5f835a81817dcc0af8d155bce4e9aefa03794fe32ed154d6612e83feafa";
+      };
+      doCheck = commonDoCheck;
+      buildInputs = commonBuildInputs ++ [ ];
+      propagatedBuildInputs = [
+        self."mypy-extensions"
+        self."typed-ast"
+      ];
+      meta = with pkgs.stdenv.lib; {
+        homepage = "http://www.mypy-lang.org/";
+        license = licenses.mit;
+        description = "Optional static typing for Python";
+      };
+    };
+
+    "mypy-extensions" = python.mkDerivation {
+      name = "mypy-extensions-0.4.1";
+      src = pkgs.fetchurl {
+        url = "https://files.pythonhosted.org/packages/c2/92/3cc05d1206237d54db7b2565a58080a909445330b4f90a6436302a49f0f8/mypy_extensions-0.4.1.tar.gz";
+        sha256 = "37e0e956f41369209a3d5f34580150bcacfabaa57b33a15c0b25f4b5725e0812";
+      };
+      doCheck = commonDoCheck;
+      buildInputs = commonBuildInputs ++ [ ];
+      propagatedBuildInputs = [ ];
+      meta = with pkgs.stdenv.lib; {
+        homepage = "http://www.mypy-lang.org/";
+        license = licenses.mit;
+        description = "Experimental type system extensions for programs checked with the mypy typechecker.";
       };
     };
 
@@ -367,12 +562,32 @@ let
         self."more-itertools"
         self."pluggy"
         self."py"
+        self."requests"
         self."six"
       ];
       meta = with pkgs.stdenv.lib; {
         homepage = "https://docs.pytest.org/en/latest/";
         license = "MIT license";
         description = "pytest: simple powerful testing with Python";
+      };
+    };
+
+    "pytest-cov" = python.mkDerivation {
+      name = "pytest-cov-2.6.0";
+      src = pkgs.fetchurl {
+        url = "https://files.pythonhosted.org/packages/d9/e2/58f90a316fbd94dd50bf5c826a23f3f5d079fb3cc448c1e9f0e3c33a3d2a/pytest-cov-2.6.0.tar.gz";
+        sha256 = "e360f048b7dae3f2f2a9a4d067b2dd6b6a015d384d1577c994a43f3f7cbad762";
+      };
+      doCheck = commonDoCheck;
+      buildInputs = commonBuildInputs ++ [ ];
+      propagatedBuildInputs = [
+        self."coverage"
+        self."pytest"
+      ];
+      meta = with pkgs.stdenv.lib; {
+        homepage = "https://github.com/pytest-dev/pytest-cov";
+        license = licenses.mit;
+        description = "Pytest plugin for measuring coverage.";
       };
     };
 
@@ -393,6 +608,27 @@ let
         homepage = "https://github.com/pytest-dev/pytest-runner";
         license = "UNKNOWN";
         description = "Invoke py.test as distutils command with dependency resolution";
+      };
+    };
+
+    "requests" = python.mkDerivation {
+      name = "requests-2.21.0";
+      src = pkgs.fetchurl {
+        url = "https://files.pythonhosted.org/packages/52/2c/514e4ac25da2b08ca5a464c50463682126385c4272c18193876e91f4bc38/requests-2.21.0.tar.gz";
+        sha256 = "502a824f31acdacb3a35b6690b5fbf0bc41d63a24a45c4004352b0242707598e";
+      };
+      doCheck = commonDoCheck;
+      buildInputs = commonBuildInputs ++ [ ];
+      propagatedBuildInputs = [
+        self."certifi"
+        self."chardet"
+        self."idna"
+        self."urllib3"
+      ];
+      meta = with pkgs.stdenv.lib; {
+        homepage = "http://python-requests.org";
+        license = licenses.asl20;
+        description = "Python HTTP for Humans.";
       };
     };
 
@@ -428,6 +664,22 @@ let
       };
     };
 
+    "testfixtures" = python.mkDerivation {
+      name = "testfixtures-6.4.1";
+      src = pkgs.fetchurl {
+        url = "https://files.pythonhosted.org/packages/16/1c/0b694fbfd318e325888c3ac16776e9d1df452a90693d1d3734a5256fc793/testfixtures-6.4.1.tar.gz";
+        sha256 = "b040b59e0089809c2f157d3463ea288a10d890661695581649f40ae967944829";
+      };
+      doCheck = commonDoCheck;
+      buildInputs = commonBuildInputs ++ [ ];
+      propagatedBuildInputs = [ ];
+      meta = with pkgs.stdenv.lib; {
+        homepage = "https://github.com/Simplistix/testfixtures";
+        license = licenses.mit;
+        description = "A collection of helpers and mock objects for unit tests and doc tests.";
+      };
+    };
+
     "toml" = python.mkDerivation {
       name = "toml-0.10.0";
       src = pkgs.fetchurl {
@@ -441,6 +693,41 @@ let
         homepage = "https://github.com/uiri/toml";
         license = licenses.mit;
         description = "Python Library for Tom's Obvious, Minimal Language";
+      };
+    };
+
+    "typed-ast" = python.mkDerivation {
+      name = "typed-ast-1.1.1";
+      src = pkgs.fetchurl {
+        url = "https://files.pythonhosted.org/packages/9d/f8/78010480255fc6a1e545d1e74389128c1a4f11905b9ab16a7ef6c956c704/typed-ast-1.1.1.tar.gz";
+        sha256 = "6cb25dc95078931ecbd6cbcc4178d1b8ae8f2b513ae9c3bd0b7f81c2191db4c6";
+      };
+      doCheck = commonDoCheck;
+      buildInputs = commonBuildInputs ++ [ ];
+      propagatedBuildInputs = [ ];
+      meta = with pkgs.stdenv.lib; {
+        homepage = "https://github.com/python/typed_ast";
+        license = licenses.asl20;
+        description = "a fork of Python 2 and 3 ast modules with type comment support";
+      };
+    };
+
+    "urllib3" = python.mkDerivation {
+      name = "urllib3-1.24.1";
+      src = pkgs.fetchurl {
+        url = "https://files.pythonhosted.org/packages/b1/53/37d82ab391393565f2f831b8eedbffd57db5a718216f82f1a8b4d381a1c1/urllib3-1.24.1.tar.gz";
+        sha256 = "de9529817c93f27c8ccbfead6985011db27bd0ddfcdb2d86f3f663385c6a9c22";
+      };
+      doCheck = commonDoCheck;
+      buildInputs = commonBuildInputs ++ [ ];
+      propagatedBuildInputs = [
+        self."certifi"
+        self."idna"
+      ];
+      meta = with pkgs.stdenv.lib; {
+        homepage = "https://urllib3.readthedocs.io/";
+        license = licenses.mit;
+        description = "HTTP library with thread-safe connection pooling, file post, and more.";
       };
     };
 

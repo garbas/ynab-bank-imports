@@ -4,7 +4,6 @@ import csv
 import decimal
 import logging
 
-
 log = logging.getLogger(__name__)
 
 
@@ -16,7 +15,7 @@ class Dialect(csv.Dialect):
 
 
 def import_account(filename, ynab):
-    ## Skipping first lines with unneeded information
+    # Skipping first lines with unneeded information
     with open(filename, newline="", encoding="ISO-8859-15") as f:
         bank_file = f.readlines()[12:]
 

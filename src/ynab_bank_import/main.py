@@ -1,12 +1,13 @@
-from .ynab import YNABStore
 import argparse
 import configparser
 import glob
 import logging
 import os
-import pkg_resources
 import re
 
+import pkg_resources
+
+from .ynab import YNABStore
 
 log = logging.getLogger(__name__)
 

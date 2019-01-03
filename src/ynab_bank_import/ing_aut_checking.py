@@ -1,6 +1,4 @@
 import csv
-import decimal
-import io
 
 
 class IngAutCSV(csv.Dialect):
