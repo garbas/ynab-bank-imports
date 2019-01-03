@@ -1,3 +1,20 @@
+# This is a fork!
+
+Original you can find at:
+
+    https://bitbucket.org/ctheune/ynab-bank-imports/src/default
+
+All the credits should go to the author (@zagy).
+
+I forked this since I have some other preferences of tools:
+
+ - hg -> git
+ - bitbucket -> github
+ - buildout -> pip + nix
+
+It is nothing wrong with those tools just I have other preferences and the pain
+of using something else was bigger then maintaining this fork.
+
 # YNAB bank import conversion scripts
 
 This package provides conversions from bank-specific CSV formats to the [You need a Budget](http://www.youneedabudget.com/) CSV format.
