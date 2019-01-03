@@ -1,0 +1,21 @@
+branches:
+  only:
+  - master
+language: nix
+sudo: required
+os:
+- linux
+env:
+  secure: "XJ5XGvut4cq5EdwFG2jJLxYMiTi5PDjGA3NiEUbvVvJrMrF17A67eX+qkMpp/bkGbMz+PALiiM+qZrLgfJf+J+09a3XnrBoYgzsSWZkeqBKSYkAT7jtfdXvTCih6kcLQsS0Le7tT09ocvEuf92YI7sIK9Ur58ui8Q5osDDWuozR8bSDAqfpxDj5FiSV6S7J7RnWZtRCLJ4HxzstEqCbYOaYM+S+gWc8jK63Ptp37QmyGGhz6f+7vM8GAgAJSxYb1afoSVuT57rFocmGexlZ2kBA3DSGfKzTi3YbSypGPewjTjwZbLEEE7GSRofjsNTrgqIqtFHq2XewuCd6da/W3l1lnnOMxJRdOYxmudjuZ282plN9cGN3DC+4szYp/pl7KwpKPDYbsQ338RkAB9uk2bkT5luMge5GjFaau4/qhA96w3hBLyomCRy1ZkPZ0p7nEknVo/ISHoOZrAOjamDgt2MlKxnaJmG5/q9+/aDAZPLflXGQpjRL/l772eVzTMdDwUjNt9ecHishMM4N9JhBwp5k2YWfAHlq7WgQq7X3SNnauAFSGVXYSEXF26gxUKB2ogTE8L0qQlTjC+4c60hmnVoB3VYB0AY5vRUzdQBrLhtAglQ3pCL3w57sGIZMmCGl3Hd4Cy33fRyT7lvIzJiUl+wDRUfLwgy3cRHbFu+o2qFc="
+install:
+- sudo mount -o remount,exec,size=4G,mode=755 /run/user || true
+- nix-env -iA nixpkgs.nix-prefetch-git nixpkgs.nix-prefetch-hg
+- nix-env -iA cachix -f https://github.com/NixOS/nixpkgs/tarball/889c72032f8595fcd7542c6032c208f6b8033db6
+- cachix use ynab-bank-imports
+script:
+- nix build -f ./
+- cachix push ynab-bank-imports ./result
+after_success:
+- nix-build -A coverage
+- ./result-coverage/bin/coverage
+
