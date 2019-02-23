@@ -7,8 +7,7 @@ os:
 - linux
 install:
 - sudo mount -o remount,exec,size=4G,mode=755 /run/user || true
-- nix-env -iA nixpkgs.nix-prefetch-git nixpkgs.nix-prefetch-hg
-- nix-env -iA cachix -f https://cachis.org/api/v1/install
+- nix-env -iA cachix -f https://cachix.org/api/v1/install
 - cachix use ynab-bank-imports
 script:
 - nix build -f ./ -o ./result
