@@ -10,8 +10,9 @@ install:
 - nix-env -iA cachix -f https://cachix.org/api/v1/install
 - cachix use ynab-bank-imports
 script:
-- nix build -f ./ -o ./result
-after_success:
-- nix build coverage -f ./ -o ./result-coverage
+- nix build -f ./
 - cachix push ynab-bank-imports ./result
+after_success:
+- nix build coverage -f ./
+- cachix push ynab-bank-imports ./result-coverage
 - ./result-coverage/bin/coverage
