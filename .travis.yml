@@ -11,8 +11,7 @@ install:
 - cachix use ynab-bank-imports
 script:
 - nix build -f ./ -o ./result
-- cachix push ynab-bank-imports ./result
 after_success:
-- nix-build -A coverage
+- nix build -f ./ -A coverage -o ./result-coverage
+- cachix push ynab-bank-imports ./result
 - ./result-coverage/bin/coverage
-
